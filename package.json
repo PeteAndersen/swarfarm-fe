@@ -9,6 +9,8 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "normalizr": "^3.3.0",
     "register-service-worker": "^1.5.2",
     "tslint-config-prettier": "^1.17.0",
     "vue": "^2.5.17",

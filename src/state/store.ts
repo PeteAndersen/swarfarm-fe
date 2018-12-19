@@ -1,16 +1,35 @@
 import Vue from 'vue';
-import Vuex from 'vuex';
+import Vuex, { StoreOptions } from 'vuex';
+
+import { RootState } from './types';
+import bestiary from './bestiary/store';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+const store: StoreOptions<RootState> = {
   state: {
-
+    loading: false,
+    error: false,
+    drawer: true,
   },
   mutations: {
-
+    LOADING(state, { value }) {
+      state.loading = value;
+    },
+    ERROR(state, { value }) {
+      state.error = value;
+    },
+    DRAWER(state, { value }) {
+      state.drawer = value;
+    },
+    TOGGLE_DRAWER(state) {
+      state.drawer = !state.drawer;
+    },
   },
-  actions: {
-
+  modules: {
+    bestiary,
   },
-});
+  strict: process.env.NODE_ENV !== 'production',
+};
+
+export default new Vuex.Store<RootState>(store);
