@@ -41,6 +41,9 @@ const mutations: MutationTree<BestiaryState> = {
   setPage(state, page: BestiaryState['page']): void {
     state.page = page;
   },
+  setOrderDir(state, dir: BestiaryState['orderDir']): void {
+    state.orderDir = dir;
+  },
   updateEntities(
     state,
     {
@@ -95,11 +98,14 @@ const actions: ActionTree<BestiaryState, RootState> = {
 const getters: GetterTree<BestiaryState, RootState> = {
   totalMonsterCount: state => Object.values(state.entities.monsters).length,
   filteredMonsters: state =>
+    // Filtering is a TODO
     denormalize(
       Object.keys(state.entities.monsters),
       [schema.monster],
       state.entities,
     ),
+  filteredMonsterCount: (state, { filteredMonsters }): number =>
+    filteredMonsters.length,
   sortedMonsters: ({ orderBy, orderDir }, { filteredMonsters }): Monster[] =>
     filteredMonsters.sort(
       (a: Monster, b: Monster) =>
