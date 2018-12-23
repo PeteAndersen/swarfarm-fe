@@ -1,7 +1,6 @@
 <template>
   <div>
     <router-view></router-view>
-    <v-snackbar :value="isPopulating" bottom right :timeout="0">Loading Bestiary...</v-snackbar>
   </div>
 </template>
 

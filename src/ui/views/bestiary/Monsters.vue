@@ -1,6 +1,7 @@
 <template>
   <div>
-    <v-container fluid>
+    <populating-bestiary v-if="isPopulating && lastPopulated === null"/>
+    <v-container v-else fluid>
       <monsters-info-bar/>
 
       <ul>
@@ -15,8 +16,9 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 import MonstersInfoBar from './components/MonstersInfoBar';
+import PopulatingBestiary from './components/PopulatingBestiary';
 
 export default {
   name: 'Monsters',
@@ -25,20 +27,20 @@ export default {
   },
   components: {
     MonstersInfoBar,
+    PopulatingBestiary,
   },
   methods: {
     ...mapActions('bestiary', ['populateBestiary']),
   },
   computed: {
-    ...mapGetters('bestiary', ['visibleMonsterList']),
-    ...mapState('bestiary', ['pageSize']),
-
+    ...mapGetters('bestiary', ['visibleMonsterList', 'filteredMonsterCount']),
+    ...mapState('bestiary', ['pageSize', 'isPopulating', 'lastPopulated']),
     page: {
       get() {
         return this.$store.state.bestiary.page;
       },
       set(newValue) {
-        this.changeMonsterListPage(newValue);
+        this.$store.commit('bestiary/setPage', newValue);
       },
     },
     numPages() {

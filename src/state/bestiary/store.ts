@@ -54,7 +54,7 @@ const mutations: MutationTree<BestiaryState> = {
   ): void {
     // Iterate through payload entities and update state using vue.set to ensure reactivity
     Object.keys(entities).forEach((entityType: string) => {
-      Object.values(entities[entityType]).map((entity: any) => {
+      Object.values(entities[entityType]).forEach((entity: any) => {
         Vue.set(state.entities[entityType], entity.id, entity);
       });
     });
