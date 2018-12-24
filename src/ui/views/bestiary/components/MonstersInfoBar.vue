@@ -14,7 +14,7 @@
             dense
             v-for="(kvp, index) in Object.entries(orderbyOptions)"
             :key="index"
-            @click="changeCreatureListOrderKey(kvp[0])"
+            @click="setOrderBy(kvp[0])"
           >
             <v-list-tile-title>{{ kvp[1] }}</v-list-tile-title>
           </v-list-tile>
@@ -53,9 +53,9 @@ export default {
     return {
       orderbyOptions: {
         name: 'Name',
-        'element,name': 'Element',
-        'archetype,name': 'Archetype',
-        'rank,name': 'Base Stars',
+        element: 'Element',
+        archetype: 'Archetype',
+        base_stars: 'Base Stars',
         maxLvlHp: 'HP',
         maxLvlAttack: 'ATK',
         maxLvlDefense: 'DEF',
@@ -73,25 +73,23 @@ export default {
   },
   computed: {
     ...mapGetters('bestiary', ['filteredMonsterCount', 'totalMonsterCount']),
-    ...mapState('bestiary', ['orderBy', 'orderDir']),
+    ...mapState('bestiary', ['orderBy']),
+    orderDir() {
+      return this.$store.state.bestiary.orderDir === 1
+        ? 'ascending'
+        : 'descending';
+    },
     orderByText() {
       return this.orderbyOptions[this.orderBy];
     },
     orderDirectionText() {
       return this.orderDirOptions[this.orderDir];
     },
-    orderDir: {
-      get() {
-        return this.$store.state.bestiary.orderDir === 1
-          ? 'ascending'
-          : 'descending';
-      },
-      set(newValue) {
-        this.setOrderBy(newValue);
-      },
-    },
   },
   methods: {
+    setOrderBy(newKey) {
+      this.$store.commit('bestiary/setOrderBy', newKey);
+    },
     setOrderDir(direction) {
       this.$store.commit(
         'bestiary/setOrderDir',

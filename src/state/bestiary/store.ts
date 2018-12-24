@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import { Module, ActionTree, MutationTree, GetterTree } from 'vuex';
 import { normalize, denormalize } from 'normalizr';
-
 import * as api from './api';
 import { RootState } from '@/state/types';
 import { BestiaryState, BestiaryEntities, BestiaryFilters } from './types';
@@ -41,6 +40,9 @@ const mutations: MutationTree<BestiaryState> = {
   setPage(state, page: BestiaryState['page']): void {
     state.page = page;
   },
+  setOrderBy(state, orderKey: BestiaryState['orderBy']): void {
+    state.orderBy = orderKey;
+  },
   setOrderDir(state, dir: BestiaryState['orderDir']): void {
     state.orderDir = dir;
   },
@@ -65,7 +67,7 @@ const actions: ActionTree<BestiaryState, RootState> = {
   async populateBestiary({ state, commit, dispatch }) {
     if (
       state.lastPopulated &&
-      state.lastPopulated < Date.now() - bestiaryLifespan
+      state.lastPopulated > Date.now() - bestiaryLifespan
     ) {
       // Bestiary has been recently populated, no need to do again right now
       return;
@@ -107,10 +109,14 @@ const getters: GetterTree<BestiaryState, RootState> = {
   filteredMonsterCount: (state, { filteredMonsters }): number =>
     filteredMonsters.length,
   sortedMonsters: ({ orderBy, orderDir }, { filteredMonsters }): Monster[] =>
-    filteredMonsters.sort(
-      (a: Monster, b: Monster) =>
-        a[orderBy] > b[orderBy] ? orderDir : -orderDir,
-    ),
+    filteredMonsters.sort((a: Monster, b: Monster) => {
+      if (a[orderBy] === b[orderBy]) {
+        // Secondary sort on name if first sort key matches, but always sort a-z
+        return a.name > b.name ? 1 : -1;
+      } else {
+        return a[orderBy] > b[orderBy] ? orderDir : -orderDir;
+      }
+    }),
   visibleMonsterList: ({ page, pageSize }, { sortedMonsters }): Monster[] =>
     sortedMonsters.slice((page - 1) * pageSize, page * pageSize),
 };
