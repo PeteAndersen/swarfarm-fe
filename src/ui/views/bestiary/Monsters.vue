@@ -1,6 +1,9 @@
 <template>
   <div>
+    <FilterForm/>
+
     <populating-bestiary v-if="isPopulating && lastPopulated === null"/>
+
     <v-container v-else fluid>
       <monsters-info-bar/>
 
@@ -17,6 +20,7 @@
 
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex';
+import FilterForm from './components/FilterForm';
 import MonstersInfoBar from './components/MonstersInfoBar';
 import PopulatingBestiary from './components/PopulatingBestiary';
 
@@ -26,6 +30,7 @@ export default {
     this.populateBestiary();
   },
   components: {
+    FilterForm,
     MonstersInfoBar,
     PopulatingBestiary,
   },

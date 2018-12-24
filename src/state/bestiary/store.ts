@@ -11,6 +11,9 @@ import schema from './schema';
 const bestiaryLifespan: number = 24 * 60 * 60 * 1000; // 24 hrs before repopulating
 const defaultFilters: BestiaryFilters = {
   obtainable: true,
+  name: '',
+  element: '',
+  nat_stars: [1, 5],
 };
 
 const bestiaryState: BestiaryState = {
