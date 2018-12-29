@@ -49,3 +49,8 @@ export interface MonsterListApiOptions {
   order_by?: string;
   obtainable?: boolean;
 }
+
+export interface SkillListApiOptions {
+  page?: number;
+  page_size?: number;
+}

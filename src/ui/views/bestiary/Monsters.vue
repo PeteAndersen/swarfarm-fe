@@ -2,9 +2,7 @@
   <div>
     <FilterForm/>
 
-    <populating-bestiary v-if="isPopulating && lastPopulated === null"/>
-
-    <v-container v-else fluid>
+    <v-container fluid>
       <monsters-info-bar/>
 
       <ul>
@@ -22,24 +20,22 @@
 import { mapState, mapActions, mapGetters } from 'vuex';
 import FilterForm from './components/FilterForm';
 import MonstersInfoBar from './components/MonstersInfoBar';
-import PopulatingBestiary from './components/PopulatingBestiary';
 
 export default {
   name: 'Monsters',
   created() {
-    this.populateBestiary();
+    this.fetchBestiaryPage();
   },
   components: {
     FilterForm,
     MonstersInfoBar,
-    PopulatingBestiary,
   },
   methods: {
-    ...mapActions('bestiary', ['populateBestiary']),
+    ...mapActions('bestiary', ['fetchBestiaryPage']),
   },
   computed: {
     ...mapGetters('bestiary', ['visibleMonsterList', 'filteredMonsterCount']),
-    ...mapState('bestiary', ['pageSize', 'isPopulating', 'lastPopulated']),
+    ...mapState('bestiary', ['pageSize']),
     page: {
       get() {
         return this.$store.state.bestiary.page;

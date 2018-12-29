@@ -7,6 +7,7 @@ import { BestiaryState, BestiaryEntities, BestiaryFilters } from './types';
 import { Monster } from '@/services/monsters.types';
 
 import schema from './schema';
+import { AxiosResponse } from 'axios';
 
 const bestiaryLifespan: number = 24 * 60 * 60 * 1000; // 24 hrs before repopulating
 const defaultFilters: BestiaryFilters = {
@@ -33,7 +34,7 @@ const bestiaryState: BestiaryState = {
   orderDir: 1,
 };
 
-const mutations: MutationTree<BestiaryState> = {
+export const mutations: MutationTree<BestiaryState> = {
   setIsPopulating(state, value: BestiaryState['isPopulating']) {
     state.isPopulating = value;
   },
@@ -67,7 +68,25 @@ const mutations: MutationTree<BestiaryState> = {
 };
 
 const actions: ActionTree<BestiaryState, RootState> = {
+  async fetchBestiaryPage({ state, commit, dispatch }) {
+    commit('LOADING', { value: true }, { root: true });
+
+    // Fetch first page based on user filters in order to quickly display
+    const {
+      data: { count, results },
+    } = await api.fetchMonsters({
+      ...api.filtersToApiParams(state.filters),
+      ...api.orderToApiParams(state.orderBy, state.orderDir),
+    });
+
+    // Commit received batch of entities for initial render
+    commit('updateEntities', normalize(results, [schema.monster]));
+    commit('LOADING', { value: false }, { root: true });
+
+    dispatch('populateBestiary');
+  },
   async populateBestiary({ state, commit, dispatch }) {
+    // Retrieve all bestiary entities for client side filtering/sorting
     if (
       state.lastPopulated &&
       state.lastPopulated > Date.now() - bestiaryLifespan
@@ -79,24 +98,43 @@ const actions: ActionTree<BestiaryState, RootState> = {
     commit('setIsPopulating', true);
     commit('setLastPopulated', null);
 
-    // Fetch all monsters
-    let page: number = 1;
-    let isMore: boolean = true;
+    const populateEntities = dispatch('populateEntities', {
+      apiEndpoint: api.fetchMonsters,
+      entitySchema: schema.monster,
+    });
+    const populateSkills = dispatch('populateEntities', {
+      apiEndpoint: api.fetchSkills,
+      entitySchema: schema.skill,
+    });
 
-    do {
-      const { data } = await api.fetchMonsters({
-        page,
-        ...api.filtersToApiParams(defaultFilters),
-      });
-      const normalized = normalize(data.results, [schema.monster]);
-      commit('updateEntities', { entities: normalized.entities });
-
-      isMore = data.next !== null;
-      page++;
-    } while (isMore);
+    await Promise.all([populateEntities, populateSkills]);
 
     commit('setIsPopulating', false);
     commit('setLastPopulated', Date.now());
+  },
+  async populateEntities({ commit }, { apiEndpoint, entitySchema }) {
+    // Get first page so page count can be determined
+    const {
+      data: { count, results },
+    } = await apiEndpoint();
+
+    // Request all remaining monster
+    const pageCount: number = Math.ceil(count / results.length);
+    const apiRequests = [];
+
+    for (let i = 2; i <= pageCount; i++) {
+      apiRequests.push(
+        apiEndpoint({
+          page: i,
+        }),
+      );
+    }
+
+    const allEntityResults: AxiosResponse[] = await Promise.all(apiRequests);
+
+    allEntityResults.forEach(({ data: { results: entities } }) => {
+      commit('updateEntities', normalize(entities, [entitySchema]));
+    });
   },
 };
 

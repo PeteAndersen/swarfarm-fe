@@ -1,16 +1,16 @@
 <template>
   <div>
     <router-view></router-view>
+    <PopulateBestiary/>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
-
+import PopulateBestiary from './components/PopulateBestiary';
 export default {
   name: 'Bestiary',
-  computed: {
-    ...mapState('bestiary', ['isPopulating']),
+  components: {
+    PopulateBestiary,
   },
 };
 </script>

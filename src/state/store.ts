@@ -8,7 +8,7 @@ import bestiary from './bestiary/store';
 Vue.use(Vuex);
 
 const store: StoreOptions<RootState> = {
-  plugins: [createPersistedState()],
+  // plugins: [createPersistedState()],
   state: {
     loading: false,
     error: false,
