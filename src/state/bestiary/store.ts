@@ -3,6 +3,7 @@ import { Module, ActionTree, MutationTree, GetterTree } from 'vuex';
 import { normalize, denormalize } from 'normalizr';
 import * as api from './api';
 import { RootState } from '@/state/types';
+import { Filter } from '@/services/filters.types';
 import { BestiaryState, BestiaryEntities, BestiaryFilters } from './types';
 import { Monster } from '@/services/monsters.types';
 
@@ -13,8 +14,19 @@ const bestiaryLifespan: number = 24 * 60 * 60 * 1000; // 24 hrs before repopulat
 const defaultFilters: BestiaryFilters = {
   obtainable: true,
   name: '',
-  element: '',
+  element: [],
   nat_stars: [1, 5],
+};
+
+const stateToFilters = (filters: BestiaryFilters): Filter => {
+  // Convert local state to input format expected by filtering system
+  return {
+    obtainable: filters.obtainable,
+    name__istartswith: filters.name,
+    element__in: filters.element,
+    nat_stars__gte: filters.nat_stars[0],
+    nat_stars__lte: filters.nat_stars[1],
+  };
 };
 
 const bestiaryState: BestiaryState = {

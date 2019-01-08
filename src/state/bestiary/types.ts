@@ -28,7 +28,7 @@ export interface BestiaryEntities {
 export interface BestiaryFilters {
   obtainable: boolean;
   name: string;
-  element: string;
+  element: string[];
   nat_stars: [number, number];
 }
 

@@ -91,7 +91,7 @@ export default {
       },
     },
     permalinkURL() {
-      const query_params = Object.entries(this.$store.state.bestiary.filters)
+      const queryParams = Object.entries(this.$store.state.bestiary.filters)
         .reduce((accum, val) => {
           if (Array.isArray(val[1])) {
             if (val[1].length) {
@@ -106,7 +106,7 @@ export default {
           return accum;
         }, [])
         .join('&');
-      return encodeURI(`${window.location.origin}?${query_params}`);
+      return encodeURI(`${window.location.origin}?${queryParams}`);
     },
     elementOptions() {
       return elements.map(el => ({ name: el, value: el }));
@@ -121,7 +121,6 @@ export default {
       console.log(this.filters);
     },
     clear() {
-      const autoApplyMem = this.autoApply;
       this.filters = { ...initialFilters };
     },
     copyPermalink() {
