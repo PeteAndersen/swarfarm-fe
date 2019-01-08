@@ -23,7 +23,10 @@ const stateToFilters = (filters: BestiaryFilters): Filter => {
   return {
     obtainable: filters.obtainable,
     name__istartswith: filters.name,
-    element__in: filters.element,
+    element__in:
+      filters.element instanceof Array && filters.element.length > 0
+        ? filters.element
+        : null,
     nat_stars__gte: filters.nat_stars[0],
     nat_stars__lte: filters.nat_stars[1],
   };

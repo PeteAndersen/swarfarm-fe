@@ -1,8 +1,6 @@
-import { LodashCurryN } from 'lodash/fp';
-
 // Filter - input format
 export interface Filter {
-  [key: string]: boolean | number | string | any[];
+  [key: string]: boolean | number | string | any[] | null;
 }
 
 export interface FilterEntity {
