@@ -3,12 +3,12 @@ import _, { LodashGet5x1 } from 'lodash/fp';
 import { Filter, FilterEntity, ComparatorMap } from './filters.types';
 
 // Convert any two-arity function into case insensitive version
-const insensitize = (compareFunc: any) =>
+export const insensitize = (compareFunc: any): any =>
   _.overArgs(compareFunc, [_.toLower, _.toLower]);
 
-const comparators: ComparatorMap = {
+export const comparators: ComparatorMap = {
   eq: _.eq,
-  neq: !_.eq,
+  neq: _.curry((b: any, a: any) => !_.eq(b, a)),
   gt: _.curry((b: any, a: any) => a > b),
   gte: _.curry((b: any, a: any) => a >= b),
   lt: _.curry((b: any, a: any) => a < b),
@@ -22,7 +22,7 @@ const comparators: ComparatorMap = {
   icontains: insensitize(_.includes),
 };
 
-const splitComparator = (attributePath: string): [LodashGet5x1, any] => {
+export const splitComparator = (attributePath: string): [LodashGet5x1, any] => {
   // Split off the comparison type from attribute path (if any)
   // Returns a curried function that will return the value of the property specified in path
   //  when passed an object, and the selected comparison function
@@ -44,7 +44,7 @@ const splitComparator = (attributePath: string): [LodashGet5x1, any] => {
   }
 };
 
-const generateFilters = (filterParams: Filter): any[] =>
+export const generateFilters = (filterParams: Filter): any[] =>
   // Convert filter parameters into functions that can be run against an object using normal
   // array filter methods
   Object.entries(filterParams).map(

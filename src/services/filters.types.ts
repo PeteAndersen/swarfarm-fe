@@ -1,6 +1,6 @@
 // Filter - input format
 export interface Filter {
-  [key: string]: boolean | number | string | any[] | null;
+  [key: string]: boolean | number | string | any[] | undefined;
 }
 
 export interface FilterEntity {

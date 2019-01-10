@@ -26,7 +26,7 @@ const stateToFilters = (filters: BestiaryFilters): Filter => {
     element__in:
       filters.element instanceof Array && filters.element.length > 0
         ? filters.element
-        : null,
+        : undefined,
     nat_stars__gte: filters.nat_stars[0],
     nat_stars__lte: filters.nat_stars[1],
   };
