@@ -63,6 +63,7 @@
 
 <script>
 import { mapMutations } from 'vuex';
+import debounce from 'lodash.debounce';
 
 import { elements } from '@/services/monsters';
 
@@ -79,6 +80,7 @@ export default {
     return {
       permalinkCopied: false,
       autoApply: false,
+      autoApplyDebounce: null,
       filters: { ...initialFilters },
     };
   },
@@ -113,6 +115,7 @@ export default {
       return elements.map(el => ({ name: el, value: el }));
     },
   },
+
   methods: {
     ...mapMutations('bestiary', ['setFilters']),
     submit(e) {
@@ -135,11 +138,14 @@ export default {
       this.permalinkCopied = true;
     },
   },
+  created() {
+    this.debouncedSetFilters = _.debounce(this.setFilters, 3000);
+  },
   watch: {
     filters: {
       handler(val, oldVal) {
         if (this.autoApply) {
-          this.setFilters({ ...val });
+          this.debouncedSetFilters(val);
         }
       },
       deep: true,
