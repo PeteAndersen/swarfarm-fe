@@ -1,21 +1,22 @@
 import Vue from 'vue';
 import { Module, ActionTree, MutationTree, GetterTree } from 'vuex';
 import { normalize, denormalize } from 'normalizr';
-import * as api from './api';
-import { RootState } from '@/state/types';
-import { Filter } from '@/services/filters.types';
-import { BestiaryState, BestiaryEntities, BestiaryFilters } from './types';
-import { Monster } from '@/services/monsters.types';
-
-import schema from './schema';
 import { AxiosResponse } from 'axios';
+
+import { RootState } from '@/state/types';
+import applyFilters from '@/services/filters';
+import { Filter } from '@/services/filters.types';
+import { Monster } from '@/services/monsters.types';
+import { BestiaryState, BestiaryEntities, BestiaryFilters } from './types';
+import * as api from './api';
+import schema from './schema';
 
 const bestiaryLifespan: number = 24 * 60 * 60 * 1000; // 24 hrs before repopulating
 const defaultFilters: BestiaryFilters = {
   obtainable: true,
   name: '',
   element: [],
-  nat_stars: [1, 5],
+  base_stars: [1, 6],
 };
 
 const stateToFilters = (filters: BestiaryFilters): Filter => {
@@ -27,8 +28,8 @@ const stateToFilters = (filters: BestiaryFilters): Filter => {
       filters.element instanceof Array && filters.element.length > 0
         ? filters.element
         : undefined,
-    nat_stars__gte: filters.nat_stars[0],
-    nat_stars__lte: filters.nat_stars[1],
+    base_stars__gte: filters.base_stars[0],
+    base_stars__lte: filters.base_stars[1],
   };
 };
 
@@ -64,6 +65,9 @@ export const mutations: MutationTree<BestiaryState> = {
   },
   setOrderDir(state, dir: BestiaryState['orderDir']): void {
     state.orderDir = dir;
+  },
+  setFilters(state, filters: BestiaryFilters): void {
+    state.filters = filters;
   },
   updateEntities(
     state,
@@ -154,14 +158,18 @@ const actions: ActionTree<BestiaryState, RootState> = {
 };
 
 const getters: GetterTree<BestiaryState, RootState> = {
-  totalMonsterCount: state => Object.values(state.entities.monsters).length,
-  filteredMonsters: state =>
-    // Filtering is a TODO
-    denormalize(
-      Object.keys(state.entities.monsters),
-      [schema.monster],
-      state.entities,
+  allMonsters: state =>
+    applyFilters(
+      { obtainable: true },
+      denormalize(
+        Object.keys(state.entities.monsters),
+        [schema.monster],
+        state.entities,
+      ),
     ),
+  totalMonsterCount: state => Object.values(state.entities.monsters).length,
+  filteredMonsters: (state, { allMonsters }) =>
+    applyFilters(stateToFilters(state.filters), allMonsters),
   filteredMonsterCount: (state, { filteredMonsters }): number =>
     filteredMonsters.length,
   sortedMonsters: ({ orderBy, orderDir }, { filteredMonsters }): Monster[] =>

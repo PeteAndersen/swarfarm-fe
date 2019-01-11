@@ -29,7 +29,7 @@ export interface BestiaryFilters {
   obtainable: boolean;
   name: string;
   element: string[] | undefined;
-  nat_stars: [number, number];
+  base_stars: [number, number];
 }
 
 export interface BestiaryState {

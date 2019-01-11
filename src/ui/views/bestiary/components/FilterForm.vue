@@ -45,7 +45,7 @@
         <v-range-slider
           v-model="filters.base_stars"
           label="Nat. Stars"
-          :max="5"
+          :max="6"
           :min="1"
           thumb-label="always"
           thumb-size="20"
@@ -62,14 +62,15 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapMutations } from 'vuex';
 
 import { elements } from '@/services/monsters';
 
 const initialFilters = {
+  obtainable: true,
   name: '',
-  element: '',
-  base_stars: [1, 5],
+  element: [],
+  base_stars: [1, 6],
 };
 
 export default {
@@ -113,12 +114,13 @@ export default {
     },
   },
   methods: {
+    ...mapMutations('bestiary', ['setFilters']),
     submit(e) {
       if (e) {
         e.preventDefault();
       }
 
-      console.log(this.filters);
+      this.setFilters({ ...this.filters });
     },
     clear() {
       this.filters = { ...initialFilters };
@@ -131,6 +133,16 @@ export default {
       document.execCommand('copy');
       document.body.removeChild(el);
       this.permalinkCopied = true;
+    },
+  },
+  watch: {
+    filters: {
+      handler(val, oldVal) {
+        if (this.autoApply) {
+          this.setFilters({ ...val });
+        }
+      },
+      deep: true,
     },
   },
 };
