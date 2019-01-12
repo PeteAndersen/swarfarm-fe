@@ -139,13 +139,13 @@ export default {
     },
   },
   created() {
-    this.debouncedSetFilters = _.debounce(this.setFilters, 3000);
+    this.debouncedSetFilters = debounce(this.setFilters, 3000);
   },
   watch: {
     filters: {
       handler(val, oldVal) {
         if (this.autoApply) {
-          this.debouncedSetFilters(val);
+          this.debouncedSetFilters({ ...val });
         }
       },
       deep: true,
