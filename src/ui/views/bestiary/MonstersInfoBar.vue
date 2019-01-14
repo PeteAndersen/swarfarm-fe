@@ -49,6 +49,7 @@
 import { mapActions, mapGetters, mapState, mapMutations } from 'vuex';
 
 export default {
+  name: 'MonstersInfoBar',
   data() {
     return {
       orderbyOptions: {

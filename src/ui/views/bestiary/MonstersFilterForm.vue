@@ -75,7 +75,7 @@ const initialFilters = {
 };
 
 export default {
-  name: 'FilterForm',
+  name: 'MonstersFilterForm',
   data() {
     return {
       permalinkCopied: false,

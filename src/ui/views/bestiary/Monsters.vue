@@ -1,13 +1,11 @@
 <template>
   <div>
-    <FilterForm/>
+    <MonstersFilterForm/>
 
     <v-container fluid>
       <monsters-info-bar/>
 
-      <ul>
-        <li v-for="monster in visibleMonsterList" :key="monster.id">{{monster.name}}</li>
-      </ul>
+      <MonstersList :monsters="visibleMonsterList"></MonstersList>
 
       <div class="text-xs-center">
         <v-pagination v-if="numPages > 1" class="pt-2" v-model="page" :length="numPages"/>
@@ -18,8 +16,9 @@
 
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex';
-import FilterForm from './components/FilterForm';
-import MonstersInfoBar from './components/MonstersInfoBar';
+import MonstersFilterForm from './MonstersFilterForm';
+import MonstersInfoBar from './MonstersInfoBar';
+import MonstersList from './MonstersList';
 
 export default {
   name: 'Monsters',
@@ -27,7 +26,8 @@ export default {
     this.fetchBestiaryPage();
   },
   components: {
-    FilterForm,
+    MonstersFilterForm,
+    MonstersList,
     MonstersInfoBar,
   },
   methods: {
