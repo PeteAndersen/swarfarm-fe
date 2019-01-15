@@ -1,7 +1,7 @@
 <template>
   <v-flex v-bind="{ [`${colsize}`]: true }">
     <v-layout column align-content-center>
-      <v-flex class="pb-0 stat font-weight-black">{{ abbreviation }}</v-flex>
+      <v-flex class="pb-0 stat font-weight-bold">{{ abbreviation }}</v-flex>
       <v-flex class="pt-0">
         {{ value }}
         <template v-if="percentageStat">%</template>

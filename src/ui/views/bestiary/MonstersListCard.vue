@@ -1,6 +1,6 @@
 <template>
   <v-flex sm12 md6 :lg6="$store.state.filterDrawer" :lg4="!$store.state.filterDrawer" xl3>
-    <v-card height="100%" :to="`/monster/${this.monster.slug}`" hover>
+    <v-card height="100%" :to="`/monster/${this.monster.com2us_id}-${this.monster.name}`" hover>
       <v-card-title>
         <v-layout>
           <MonsterAvatar :monster="monster"/>
@@ -31,7 +31,12 @@
       <v-divider/>
       <v-container class="pa-2">
         <v-layout row wrap class="spells pb-2">
-          <Skill v-for="skill in monster.skills" :skill="skill" :key="skill.id"/>
+          <Skill
+            v-for="skill in loadedSkills"
+            :skill="skill"
+            :key="skill.id"
+            :class="`xs${spellColSize}`"
+          />
         </v-layout>
       </v-container>
     </v-card>
@@ -41,9 +46,9 @@
 <script>
 import { startCase } from 'lodash';
 
-import monsterAvatar from '@/ui/components/monsters/MonsterAvatar.vue';
-import Skill from '@/ui/components/monsters/Skill.vue';
-import Stat from '@/ui/components/monsters/Stat.vue';
+import MonsterAvatar from '@/ui/components/monsters/MonsterAvatar';
+import Skill from '@/ui/components/monsters/Skill';
+import Stat from '@/ui/components/monsters/Stat';
 
 export default {
   name: 'MonstersListCard',
@@ -53,11 +58,21 @@ export default {
       required: true,
     },
   },
-  computed: {},
+  computed: {
+    loadedSkills() {
+      return this.monster.skills.reduce(
+        (accum, skill) => (skill ? [...accum, skill] : accum),
+        [],
+      );
+    },
+    spellColSize() {
+      return this.monster.skills.length === 3 ? 4 : 6;
+    },
+  },
   components: {
     Skill,
     Stat,
-    monsterAvatar,
+    MonsterAvatar,
   },
   methods: { startCase },
 };

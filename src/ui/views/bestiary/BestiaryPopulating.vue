@@ -8,7 +8,7 @@
 import { mapState } from 'vuex';
 
 export default {
-  name: 'PopulateBestiary',
+  name: 'BestiaryPopulating',
   data() {
     return {
       show: true,

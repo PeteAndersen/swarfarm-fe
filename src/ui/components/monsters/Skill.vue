@@ -1,21 +1,21 @@
 <template>
   <v-flex>
     <v-menu open-on-hover lazy :open-delay="350" max-width="350px">
-      <div slot="activator" class="spell-box">
-        <div class="subheader">{{spell.slot}}. {{spell.name}}</div>
+      <div slot="activator" class="skill-box">
+        <div class="subheader">{{skill.slot}}. {{skill.name}}</div>
 
-        <v-avatar size="3em" class="skill-icon">
-          <img :src="`/img/skills/${spell.icon_filename}.png`">
+        <v-avatar tile size="3em" class="skill-icon">
+          <img :src="`/img/skills/${skill.icon_filename}`">
         </v-avatar>
 
         <v-avatar
-          v-for="(effect, index) in spell.effects"
+          v-for="(effect, index) in skill.effects"
           :key="index"
           tile
           size="1.5em"
           slot="activator"
         >
-          <img :src="effect.effect.icon_filename">
+          <img :src="`img/skill_effects/${effect.effect.icon_filename}`">
         </v-avatar>
       </div>
 
@@ -46,7 +46,7 @@ export default {
 .v-menu {
   width: 100%;
 }
-.spell-box {
+.skill-box {
   white-space: normal;
   max-width: 100%;
 }

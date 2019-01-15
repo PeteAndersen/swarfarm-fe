@@ -1,16 +1,16 @@
 <template>
   <div>
     <router-view></router-view>
-    <PopulateBestiary/>
+    <BestiaryPopulating/>
   </div>
 </template>
 
 <script>
-import PopulateBestiary from './components/PopulateBestiary';
+import BestiaryPopulating from './BestiaryPopulating';
 export default {
   name: 'Bestiary',
   components: {
-    PopulateBestiary,
+    BestiaryPopulating,
   },
 };
 </script>

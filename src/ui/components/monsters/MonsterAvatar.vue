@@ -1,12 +1,12 @@
 <template>
   <div :style="`height:${size};width:${size}`">
     <img class="avatar" :src="avatarUrl">
-    <img
-      v-if="stars"
-      v-for="x in stars"
-      :key="x"
-      src="/img/stars/star-awakened.png"
-      :class="{
+    <template v-if="stars">
+      <img
+        v-for="x in stars"
+        :key="x"
+        src="/img/stars/star-awakened.png"
+        :class="{
         'star-1': x == 1,
         'star-2': x == 2,
         'star-3': x == 3,
@@ -14,7 +14,8 @@
         'star-5': x == 5,
         'star-6': x == 5,
       }"
-    >
+      >
+    </template>
     <div class="level-text">
       <span v-if="level">{{ level }}</span>
     </div>
@@ -46,8 +47,8 @@ export default {
   },
   computed: {
     avatarUrl: function() {
-      return this.monster.trackingName
-        ? `/img/monsters/${this.monster.image_filename}.png`
+      return this.monster.image_filename
+        ? `/img/monsters/${this.monster.image_filename}`
         : `/img/monsters/missing.png`;
     },
   },
