@@ -137,7 +137,7 @@ const actions: ActionTree<BestiaryState, RootState> = {
       data: { count, results },
     } = await apiEndpoint();
 
-    // Request all remaining monster
+    // Request all remaining pages
     const pageCount: number = Math.ceil(count / results.length);
     const apiRequests = [];
 
@@ -151,6 +151,7 @@ const actions: ActionTree<BestiaryState, RootState> = {
 
     const allEntityResults: AxiosResponse[] = await Promise.all(apiRequests);
 
+    commit('updateEntities', normalize(results, [entitySchema]));
     allEntityResults.forEach(({ data: { results: entities } }) => {
       commit('updateEntities', normalize(entities, [entitySchema]));
     });
@@ -167,7 +168,7 @@ const getters: GetterTree<BestiaryState, RootState> = {
         state.entities,
       ),
     ),
-  totalMonsterCount: state => Object.values(state.entities.monsters).length,
+  totalMonsterCount: (state, { allMonsters }) => allMonsters.length,
   filteredMonsters: (state, { allMonsters }) =>
     applyFilters(stateToFilters(state.filters), allMonsters),
   filteredMonsterCount: (state, { filteredMonsters }): number =>
