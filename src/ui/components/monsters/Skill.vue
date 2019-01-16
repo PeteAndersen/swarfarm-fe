@@ -2,7 +2,7 @@
   <v-flex>
     <v-menu open-on-hover lazy :open-delay="350" max-width="350px">
       <div slot="activator" class="skill-box">
-        <div class="subheader">{{skill.slot}}. {{skill.name}}</div>
+        <div class="subheader text-truncate">{{skill.slot}}. {{skill.name}}</div>
 
         <v-avatar tile size="3em" class="skill-icon">
           <img :src="`/img/skills/${skill.icon_filename}`">
@@ -60,10 +60,8 @@ export default {
 }
 .subheader {
   height: 2em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
+
 .skill-icon {
   float: left;
 }
