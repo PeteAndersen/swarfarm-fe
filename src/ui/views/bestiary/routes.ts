@@ -1,6 +1,9 @@
-import Bestiary from './Bestiary.vue';
-import Monsters from './Monsters.vue';
-import MonsterDetail from './MonsterDetail.vue';
+const Bestiary = () =>
+  import(/* webpackChunkName: "bestiary" */ './Bestiary.vue');
+const Monsters = () =>
+  import(/* webpackChunkName: "bestiary" */ './Monsters.vue');
+const MonsterDetail = () =>
+  import(/* webpackChunkName: "bestiary" */ './MonsterDetail.vue');
 
 export default [
   {
