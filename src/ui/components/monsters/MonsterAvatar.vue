@@ -46,7 +46,7 @@ export default {
     },
   },
   computed: {
-    avatarUrl: function() {
+    avatarUrl() {
       return this.monster.image_filename
         ? `/img/monsters/${this.monster.image_filename}`
         : `/img/monsters/missing.png`;

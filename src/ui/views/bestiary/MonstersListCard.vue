@@ -31,6 +31,12 @@
       <v-divider/>
       <v-container class="pa-2">
         <v-layout row wrap class="spells pb-2">
+          <LeaderSkill
+            v-if="monster.leader_skill"
+            :skill="monster.leader_skill"
+            :class="`xs${spellColSize}`"
+          />
+
           <Skill
             v-for="skill in loadedSkills"
             :skill="skill"
@@ -47,6 +53,7 @@
 import { startCase } from 'lodash';
 
 import MonsterAvatar from '@/ui/components/monsters/MonsterAvatar';
+import LeaderSkill from '@/ui/components/monsters/LeaderSkill';
 import Skill from '@/ui/components/monsters/Skill';
 import Stat from '@/ui/components/monsters/Stat';
 
@@ -66,11 +73,15 @@ export default {
       );
     },
     spellColSize() {
+      if (this.leader_skill !== null) {
+        return 6;
+      }
       return this.monster.skills.length === 3 ? 4 : 6;
     },
   },
   components: {
     Skill,
+    LeaderSkill,
     Stat,
     MonsterAvatar,
   },

@@ -9,13 +9,14 @@
         </v-avatar>
 
         <v-avatar
-          v-for="(effect, index) in skill.effects"
+          v-for="(effect, index) in effectsWithIcons"
           :key="index"
           tile
           size="1.5em"
           slot="activator"
+          class="ml-1"
         >
-          <img :src="`img/skill_effects/${effect.effect.icon_filename}`">
+          <img :src="`/img/skill_effects/${effect.effect.icon_filename}`">
         </v-avatar>
       </div>
 
@@ -38,7 +39,14 @@ export default {
       required: true,
     },
   },
-  computed: {},
+  computed: {
+    effectsWithIcons() {
+      return this.skill.effects.reduce(
+        (accum, eff) => (eff.effect.icon_filename ? [...accum, eff] : accum),
+        [],
+      );
+    },
+  },
 };
 </script>
 
