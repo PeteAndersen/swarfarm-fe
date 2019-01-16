@@ -139,7 +139,7 @@ export default {
     },
   },
   created() {
-    this.debouncedSetFilters = debounce(this.setFilters, 3000);
+    this.debouncedSetFilters = debounce(this.setFilters, 300);
   },
   watch: {
     filters: {
