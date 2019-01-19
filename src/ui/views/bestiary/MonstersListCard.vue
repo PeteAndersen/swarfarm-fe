@@ -1,7 +1,7 @@
 <template>
   <v-flex sm12 md6 :lg6="$store.state.filterDrawer" :lg4="!$store.state.filterDrawer" xl3>
     <v-card height="100%" :to="`/monster/${this.monster.com2us_id}-${this.monster.name}`" hover>
-      <v-card-title>
+      <v-card-title class="pb-1">
         <v-layout>
           <v-tooltip bottom>
             <v-avatar slot="activator" size="2rem">
@@ -11,7 +11,7 @@
           </v-tooltip>
           <h2 class="ml-1">{{monster.name}}</h2>
           <v-spacer/>
-          <v-subheader class="caption">{{monster.archetype.toUpperCase()}}</v-subheader>
+          <span class="caption">{{monster.archetype.toUpperCase()}}</span>
         </v-layout>
       </v-card-title>
       <v-container grid-list-md text-xs-center class="pa-2">
@@ -35,7 +35,7 @@
       </v-container>
       <v-divider/>
       <v-container class="pa-2">
-        <v-layout row wrap class="spells pb-2">
+        <v-layout row wrap class="text-truncate pb-2">
           <LeaderSkill
             v-if="monster.leader_skill"
             :skill="monster.leader_skill"
@@ -95,8 +95,4 @@ export default {
 </script>
 
 <style scoped>
-.spells {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
 </style>

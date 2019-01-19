@@ -7,30 +7,62 @@ import { RootState } from '@/state/types';
 import applyFilters from '@/services/filters';
 import { Filter } from '@/services/filters.types';
 import { Monster } from '@/services/monsters.types';
-import { BestiaryState, BestiaryEntities, BestiaryFilters } from './types';
+import {
+  BestiaryState,
+  BestiaryEntities,
+  BestiaryFilters,
+  AwakenedOptions,
+} from './types';
 import * as api from './api';
 import schema from './schema';
 
 const bestiaryLifespan: number = 24 * 60 * 60 * 1000; // 24 hrs before repopulating
-const defaultFilters: BestiaryFilters = {
-  obtainable: true,
+export const defaultFilters: BestiaryFilters = {
   name: '',
   element: [],
   base_stars: [1, 6],
+  awakened: AwakenedOptions.BOTH,
+  archetype: [],
+  leader_skill_area: [],
+  leader_skill_attribute: [],
+  leader_skill_bonus: 0,
 };
+
+const undefinedIfEmpty = (arry: any[]): any[] | undefined =>
+  arry instanceof Array && arry.length > 0 ? arry : undefined;
 
 const stateToFilters = (filters: BestiaryFilters): Filter => {
   // Convert local state to input format expected by filtering system
-  return {
-    obtainable: filters.obtainable,
+  let awakened;
+  switch (filters.awakened) {
+    case AwakenedOptions.AWAKENED:
+      awakened = true;
+      break;
+    case AwakenedOptions.UNAWAKENED:
+      awakened = false;
+      break;
+    case AwakenedOptions.BOTH:
+    default:
+      awakened = undefined;
+      break;
+  }
+
+  const filterObj: Filter = {
     name__istartswith: filters.name,
-    element__in:
-      filters.element instanceof Array && filters.element.length > 0
-        ? filters.element
-        : undefined,
+    element__in: undefinedIfEmpty(filters.element),
     base_stars__gte: filters.base_stars[0],
     base_stars__lte: filters.base_stars[1],
+    is_awakened: awakened,
+    archetype__in: undefinedIfEmpty(filters.archetype),
+    leader_skill__area__in: undefinedIfEmpty(filters.leader_skill_area),
+    leader_skill__attribute__in: undefinedIfEmpty(
+      filters.leader_skill_attribute,
+    ),
+    leader_skill__amount__gte: filters.leader_skill_bonus
+      ? filters.leader_skill_bonus
+      : undefined,
   };
+  return filterObj;
 };
 
 const bestiaryState: BestiaryState = {

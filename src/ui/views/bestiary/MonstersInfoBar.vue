@@ -56,6 +56,7 @@ export default {
         name: 'Name',
         element: 'Element',
         archetype: 'Archetype',
+        family_id: 'Family',
         base_stars: 'Base Stars',
         maxLvlHp: 'HP',
         maxLvlAttack: 'ATK',

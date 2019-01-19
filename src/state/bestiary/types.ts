@@ -1,10 +1,16 @@
 import {
   Monster,
-  Skill,
+  Archetype,
+  Element,
   CraftMaterial,
-  Effect,
   MonsterSource,
 } from '@/services/monsters.types';
+import {
+  Skill,
+  Effect,
+  LeaderSkillArea,
+  LeaderSkillAttribute,
+} from '@/services/skills.types';
 
 export interface BestiaryEntities {
   [key: string]: any;
@@ -26,10 +32,20 @@ export interface BestiaryEntities {
 }
 
 export interface BestiaryFilters {
-  obtainable: boolean;
   name: string;
-  element: string[] | undefined;
+  element: Element[];
   base_stars: [number, number];
+  awakened: AwakenedOptions;
+  archetype: Archetype[];
+  leader_skill_area: LeaderSkillArea[];
+  leader_skill_attribute: LeaderSkillAttribute[];
+  leader_skill_bonus: number;
+}
+
+export enum AwakenedOptions {
+  BOTH = 'both',
+  UNAWAKENED = 'unawakened',
+  AWAKENED = 'awakened',
 }
 
 export interface BestiaryState {

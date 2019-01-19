@@ -26,8 +26,6 @@ export const filtersToApiParams = (
   params: BestiaryFilters,
 ): MonsterListApiOptions => {
   const apiParams: MonsterListApiOptions = {};
-
-  apiParams.obtainable = params.obtainable;
-
+  // TODO: Fill this out further.
   return apiParams;
 };

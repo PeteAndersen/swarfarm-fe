@@ -42,6 +42,24 @@
           </template>
         </v-select>
 
+        <v-select
+          v-model="filters.archetype"
+          label="Archetype"
+          :items="archetypeOptions"
+          multiple
+          item-text="name"
+          item-value="value"
+        ></v-select>
+
+        <v-radio-group v-model="filters.awakened">
+          <v-radio
+            v-for="(data, idx) in awakenedOptions"
+            :key="idx"
+            :label="data.name"
+            :value="data.value"
+          ></v-radio>
+        </v-radio-group>
+
         <v-range-slider
           v-model="filters.base_stars"
           label="Nat. Stars"
@@ -51,6 +69,31 @@
           thumb-size="20"
           always-dirty
         />
+
+        <v-divider/>
+        <h3 class="pt-2">Leader Skill</h3>
+
+        <v-select
+          v-model="filters.leader_skill_attribute"
+          label="Bonus Attribute"
+          :items="leaderSkillAttributeOptions"
+          multiple
+          item-text="name"
+          item-value="value"
+        ></v-select>
+
+        <v-select
+          v-model="filters.leader_skill_area"
+          label="Area of Effect"
+          :items="leaderSkillAreaOptions"
+          multiple
+          item-text="name"
+          item-value="value"
+        ></v-select>
+
+        <v-slider v-model="filters.leader_skill_bonus" label="Min. Bonus" :min="0" :max="55" thumb-label="always" thumb-size="20" always-dirty></v-slider>
+
+        <v-divider/>
 
         <v-switch v-model="autoApply" label="Auto-Apply Filters"></v-switch>
 
@@ -65,14 +108,13 @@
 import { mapMutations } from 'vuex';
 import debounce from 'lodash.debounce';
 
-import { elements } from '@/services/monsters';
+import { Element, Archetype } from '@/services/monsters.types';
+import { LeaderSkillAttribute, LeaderSkillArea } from '@/services/skills.types';
+import { defaultFilters } from '@/state/bestiary/store';
+import { AwakenedOptions } from '@/state/bestiary/types';
 
-const initialFilters = {
-  obtainable: true,
-  name: '',
-  element: [],
-  base_stars: [1, 6],
-};
+const toOptionsList = opts =>
+  Object.values(opts).map(opt => ({ name: opt, value: opt }));
 
 export default {
   name: 'MonstersFilterForm',
@@ -81,7 +123,12 @@ export default {
       permalinkCopied: false,
       autoApply: false,
       autoApplyDebounce: null,
-      filters: { ...initialFilters },
+      filters: { ...this.$store.state.bestiary.filters },
+      awakenedOptions: [
+        { name: 'Awakened and Unawakened', value: AwakenedOptions.BOTH },
+        { name: 'Unawakened Only', value: AwakenedOptions.UNAWAKENED },
+        { name: 'Awakened Only', value: AwakenedOptions.AWAKENED },
+      ],
     };
   },
   computed: {
@@ -112,21 +159,28 @@ export default {
       return encodeURI(`${window.location.origin}?${queryParams}`);
     },
     elementOptions() {
-      return elements.map(el => ({ name: el, value: el }));
+      return toOptionsList(Element);
+    },
+    archetypeOptions() {
+      return toOptionsList(Archetype);
+    },
+    leaderSkillAttributeOptions() {
+      return toOptionsList(LeaderSkillAttribute);
+    },
+    leaderSkillAreaOptions() {
+      return toOptionsList(LeaderSkillArea);
     },
   },
-
   methods: {
     ...mapMutations('bestiary', ['setFilters']),
     submit(e) {
       if (e) {
         e.preventDefault();
       }
-
       this.setFilters({ ...this.filters });
     },
     clear() {
-      this.filters = { ...initialFilters };
+      this.filters = { ...defaultFilters };
     },
     copyPermalink() {
       const el = document.createElement('textarea');

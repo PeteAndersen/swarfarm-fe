@@ -1,3 +1,26 @@
+import { LeaderSkill } from './skills.types';
+
+export enum Element {
+  FIRE = 'Fire',
+  WATER = 'Water',
+  WIND = 'Wind',
+  LIGHT = 'Light',
+  DARK = 'Dark',
+}
+
+// Union pureElement with Element if all 6 elements are needed
+export enum pureElement {
+  PURE = 'Pure',
+}
+
+export enum Archetype {
+  ATTACK = 'Attack',
+  DEFENSE = 'Defense',
+  HP = 'HP',
+  SUPPORT = 'Support',
+  MATERIAL = 'Material',
+}
+
 export interface Monster {
   [key: string]: any;
   id: number;
@@ -6,9 +29,9 @@ export interface Monster {
   family_id: number;
   name: string;
   image_filename: string;
-  element: string;
-  archetype: string;
-  base_stars: number;
+  element: Element;
+  archetype: Archetype;
+  base_stars: 1 | 2 | 3 | 4 | 5 | 6;
   obtainable: boolean;
   can_awaken: boolean;
   is_awakened: boolean;
@@ -57,61 +80,6 @@ export interface Monster {
   homunculus: boolean;
   craft_cost: number | null;
   craft_materials: MonsterCraftRequirement[];
-}
-
-export interface Skill {
-  id: number;
-  com2us_id: number;
-  name: string;
-  description: string;
-  slot: number;
-  cooltime: number | null;
-  hits: number | null;
-  passive: boolean;
-  aoe: boolean;
-  max_level: number;
-  level_progress_description: string[];
-  effects: SkillEffectDetail[];
-  multiplier_formula: string;
-  multiplier_formula_raw: string;
-  scales_with: string[];
-  icon_filename: string;
-  used_on: number[];
-}
-
-export interface SkillEffectDetail {
-  effect: Effect;
-  aoe: boolean;
-  single_target: boolean;
-  self_effect: boolean;
-  chance: number | null;
-  on_crit: boolean;
-  on_death: boolean;
-  random: boolean;
-  quantity: number | null;
-  all: boolean;
-  self_hp: boolean;
-  target_hp: boolean;
-  damage: boolean;
-  note: string;
-}
-
-export interface Effect {
-  id: number;
-  url: string;
-  name: string;
-  is_buff: boolean;
-  description: string;
-  icon_filename: string;
-}
-
-export interface LeaderSkill {
-  id?: number;
-  url?: string;
-  attribute: string;
-  amount: number;
-  area: string;
-  element: string | null;
 }
 
 export interface MonsterSource {
