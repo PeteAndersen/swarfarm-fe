@@ -1,18 +1,18 @@
 <template>
   <div :style="`height:${size};width:${size}`">
-    <img class="avatar" :src="avatarUrl">
+    <v-img class="avatar" :src="avatarUrl" lazy-src="/public/img/monsters/missing.jpg"></v-img>
     <template v-if="stars">
       <img
         v-for="x in stars"
         :key="x"
-        src="/img/stars/star-awakened.png"
+        :src="`/img/icons/${starType}`"
         :class="{
         'star-1': x == 1,
         'star-2': x == 2,
         'star-3': x == 3,
         'star-4': x == 4,
         'star-5': x == 5,
-        'star-6': x == 5,
+        'star-6': x == 6,
       }"
       >
     </template>
@@ -31,7 +31,7 @@ export default {
       required: true,
     },
     stars: {
-      type: Boolean,
+      type: Number,
       default: true,
       required: false,
     },
@@ -50,6 +50,13 @@ export default {
       return this.monster.image_filename
         ? `/img/monsters/${this.monster.image_filename}`
         : `/img/monsters/missing.png`;
+    },
+    starType() {
+      return this.monster.can_awaken
+        ? this.monster.is_awakened
+          ? 'star-awakened.png'
+          : 'star-unawakened.png'
+        : 'star-fodder.png';
     },
   },
 };
@@ -84,34 +91,35 @@ img.avatar {
 .star-2,
 .star-3,
 .star-4,
-.star-5 {
+.star-5,
+.star-6 {
   position: absolute;
-  top: -4%;
+  top: 0;
   margin-left: -11.4px;
   height: 26%;
 }
 
 .star-1 {
-  left: 5%;
+  left: 12%;
 }
 
 .star-2 {
-  left: 15%;
+  left: 24%;
 }
 
 .star-3 {
-  left: 25%;
+  left: 36%;
 }
 
 .star-4 {
-  left: 35%;
+  left: 48%;
 }
 
 .star-5 {
-  left: 45%;
+  left: 60%;
 }
 
 .star-6 {
-  left: 55%;
+  left: 72%;
 }
 </style>

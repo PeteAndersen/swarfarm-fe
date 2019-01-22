@@ -17,7 +17,7 @@
       <v-container grid-list-md text-xs-center class="pa-2">
         <v-layout row>
           <v-flex>
-            <MonsterAvatar :monster="monster"/>
+            <MonsterAvatar :monster="monster" :stars="monster.base_stars"/>
           </v-flex>
           <v-flex>
             <v-layout row wrap>
