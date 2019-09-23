@@ -22,7 +22,7 @@ const comparators: ComparatorMap = {
   icontains: insensitize(_.includes), // substring matching only
 };
 
-const splitComparator = (attributePath: string): [LodashGet5x1, any] => {
+const splitComparator = (attributePath: string): [any, any] => {
   // Split off the comparison type from attribute path (if any)
   // Returns a curried function that will return the value of the property specified in path
   //  when passed an object, and the selected comparison function
@@ -61,11 +61,9 @@ const generateFilters = (filterParams: Filter): any[] =>
     }),
   );
 
-const applyFilters = _.curry(
-  (filters: Filter, entities: any[]): any[] => {
-    const filterFuncs = _.allPass(generateFilters(filters));
-    return entities.filter(filterFuncs);
-  },
-);
+const applyFilters = _.curry((filters: Filter, entities: any[]): any[] => {
+  const filterFuncs = _.allPass(generateFilters(filters));
+  return entities.filter(filterFuncs);
+});
 
 export default applyFilters;

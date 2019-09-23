@@ -9,7 +9,7 @@
         </v-list-tile>
       </v-list>
       <v-tooltip bottom>
-        <v-btn icon flat slot="activator" @click="copyPermalink">
+        <v-btn icon text slot="activator" @click="copyPermalink">
           <v-icon>link</v-icon>
         </v-btn>Copy Permalink
       </v-tooltip>
@@ -19,7 +19,7 @@
       <v-form ref="form" @submit="submit">
         <h3>Monster Attributes</h3>
 
-        <v-text-field v-model="filters.name" label="Name" browser-autocomplete="off"/>
+        <v-text-field v-model="filters.name" label="Name" autocomplete="off" />
 
         <v-select
           v-model="filters.element"
@@ -31,13 +31,13 @@
         >
           <template slot="item" slot-scope="data">
             <v-list-tile-action>
-              <v-checkbox v-model="data.tile.props.value"/>
+              <v-checkbox v-model="data.tile.props.value" />
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
             </v-list-tile-content>
             <v-list-tile-avatar>
-              <img :src="`/static/creatures/icon-${data.item.value}.png`">
+              <img :src="`/static/creatures/icon-${data.item.value}.png`" />
             </v-list-tile-avatar>
           </template>
         </v-select>
@@ -70,7 +70,7 @@
           always-dirty
         />
 
-        <v-divider/>
+        <v-divider />
         <h3 class="pt-2">Leader Skill</h3>
 
         <v-select
@@ -91,14 +91,22 @@
           item-value="value"
         ></v-select>
 
-        <v-slider v-model="filters.leader_skill_bonus" label="Min. Bonus" :min="0" :max="55" thumb-label="always" thumb-size="20" always-dirty></v-slider>
+        <v-slider
+          v-model="filters.leader_skill_bonus"
+          label="Min. Bonus"
+          :min="0"
+          :max="55"
+          thumb-label="always"
+          thumb-size="20"
+          always-dirty
+        ></v-slider>
 
-        <v-divider/>
+        <v-divider />
 
         <v-switch v-model="autoApply" label="Auto-Apply Filters"></v-switch>
 
         <v-btn type="submit" :disabled="autoApply">Apply</v-btn>
-        <v-btn flat @click="clear">Clear</v-btn>
+        <v-btn text @click="clear">Clear</v-btn>
       </v-form>
     </v-container>
   </v-navigation-drawer>
@@ -106,7 +114,7 @@
 
 <script>
 import { mapMutations } from 'vuex';
-import debounce from 'lodash.debounce';
+import { debounce } from 'lodash';
 
 import { Element, Archetype } from '@/services/monsters.types';
 import { LeaderSkillAttribute, LeaderSkillArea } from '@/services/skills.types';

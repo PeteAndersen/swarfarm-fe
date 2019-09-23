@@ -1,18 +1,16 @@
 <template>
-  <v-app dark>
+  <v-app>
     <div class="loading-indicator">
       <v-progress-linear :active="$store.state.loading" :indeterminate="true" class="ma-0"></v-progress-linear>
     </div>
 
-    <v-toolbar app>
+    <v-app-bar app>
       <v-toolbar-title class="headline text-uppercase">
         <span>SWARFARM</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-items>
-        <v-btn flat to="/bestiary">Bestiary</v-btn>
-      </v-toolbar-items>
-    </v-toolbar>
+      <v-btn text to="/bestiary">Bestiary</v-btn>
+    </v-app-bar>
 
     <v-content>
       <router-view></router-view>

@@ -5,7 +5,7 @@
         <v-icon class="pr-1">menu</v-icon>Filters
       </v-btn>Sort By
       <v-menu>
-        <v-btn flat slot="activator" class="pl-1 pr-1">
+        <v-btn text slot="activator" class="pl-1 pr-1">
           {{ orderByText }}
           <v-icon>arrow_drop_down</v-icon>
         </v-btn>
@@ -22,7 +22,7 @@
       </v-menu>
 
       <v-menu>
-        <v-btn flat slot="activator" class="pl-1 pr-1">
+        <v-btn text slot="activator" class="pl-1 pr-1">
           {{ orderDirectionText }}
           <v-icon>arrow_drop_down</v-icon>
         </v-btn>
@@ -39,7 +39,7 @@
       </v-menu>
     </v-flex>
 
-    <v-spacer/>
+    <v-spacer />
 
     <v-flex class="text-xs-right">{{ filteredMonsterCount }} of {{ totalMonsterCount }} Monsters</v-flex>
   </v-layout>
