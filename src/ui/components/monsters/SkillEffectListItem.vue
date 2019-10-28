@@ -1,17 +1,17 @@
 <template>
-  <v-list-tile>
-    <v-list-tile-avatar v-if="icon || effect.effect.icon_filename" tile>
+  <v-list-item>
+    <v-list-item-avatar v-if="icon || effect.effect.icon_filename" tile>
       <img
         v-if="effect.effect.icon_filename"
         :src="`/img/skill_effects/${effect.effect.icon_filename}`"
-      >
-    </v-list-tile-avatar>
+      />
+    </v-list-item-avatar>
 
-    <v-list-tile-content>
-      <v-list-tile-title>{{ effect.effect.name }}</v-list-tile-title>
-      <v-list-tile-sub-title>{{ effectDetail }}</v-list-tile-sub-title>
-    </v-list-tile-content>
-  </v-list-tile>
+    <v-list-item-content>
+      <v-list-item-title>{{ effect.effect.name }}</v-list-item-title>
+      <v-list-item-sub-title>{{ effectDetail }}</v-list-item-sub-title>
+    </v-list-item-content>
+  </v-list-item>
 </template>
 
 <script>

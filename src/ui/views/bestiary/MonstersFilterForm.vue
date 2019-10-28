@@ -1,17 +1,22 @@
 <template>
-  <v-navigation-drawer clipped fixed app v-model="drawer">
+  <v-navigation-drawer fixed temporary v-model="filterDrawer">
     <v-snackbar color="success" v-model="permalinkCopied" absolute top :timeout="2000">Copied!</v-snackbar>
 
     <v-toolbar flat>
       <v-list>
-        <v-list-tile>
-          <v-list-tile-title class="title">Filters</v-list-tile-title>
-        </v-list-tile>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title class="title">Filters</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
       <v-tooltip bottom>
-        <v-btn icon text slot="activator" @click="copyPermalink">
-          <v-icon>link</v-icon>
-        </v-btn>Copy Permalink
+        <template v-slot:activator="{ on }">
+          <v-btn v-on="on" icon text @click="copyPermalink">
+            <v-icon>link</v-icon>
+          </v-btn>
+        </template>
+        Copy Permalink
       </v-tooltip>
     </v-toolbar>
 
@@ -30,15 +35,15 @@
           item-value="value"
         >
           <template slot="item" slot-scope="data">
-            <v-list-tile-action>
+            <v-list-item-action>
               <v-checkbox v-model="data.tile.props.value" />
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
-            </v-list-tile-content>
-            <v-list-tile-avatar>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title v-html="data.item.name"></v-list-item-title>
+            </v-list-item-content>
+            <v-list-item-avatar>
               <img :src="`/static/creatures/icon-${data.item.value}.png`" />
-            </v-list-tile-avatar>
+            </v-list-item-avatar>
           </template>
         </v-select>
 
@@ -140,12 +145,12 @@ export default {
     };
   },
   computed: {
-    drawer: {
+    filterDrawer: {
       get() {
-        return this.$store.state.drawer;
+        return this.$store.state.bestiary.filterDrawer;
       },
       set(value) {
-        this.$store.commit('DRAWER', { value });
+        this.setFilterDrawer(value);
       },
     },
     permalinkURL() {
@@ -180,7 +185,7 @@ export default {
     },
   },
   methods: {
-    ...mapMutations('bestiary', ['setFilters']),
+    ...mapMutations('bestiary', ['setFilterDrawer', 'setFilters']),
     submit(e) {
       if (e) {
         e.preventDefault();

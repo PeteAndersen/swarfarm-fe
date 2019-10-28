@@ -1,6 +1,7 @@
 <template>
-  <v-snackbar :value="isPopulating && show" bottom right :timeout="0">Populating Bestiary...
-    <v-btn color="pink" flat @click="show = false">Close</v-btn>
+  <v-snackbar :value="isPopulating && show" bottom right :timeout="0">
+    Populating Bestiary...
+    <v-btn color="pink" text @click="show = false">Close</v-btn>
   </v-snackbar>
 </template>
 

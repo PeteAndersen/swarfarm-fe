@@ -1,21 +1,21 @@
 <template>
   <v-menu open-on-hover lazy :open-delay="350" max-width="350px">
-    <v-list-tile slot="activator">
-      <v-list-tile-avatar>
-        <img :src="`/static/spells/${spell.image}.png`">
-      </v-list-tile-avatar>
+    <v-list-item slot="activator">
+      <v-list-item-avatar>
+        <img :src="`/static/spells/${spell.image}.png`" />
+      </v-list-item-avatar>
 
-      <v-list-tile-content>
-        <v-list-tile-title>{{ spell.slot }}. {{ spell.title }}</v-list-tile-title>
-        <v-list-tile-sub-title>
+      <v-list-item-content>
+        <v-list-item-title>{{ spell.slot }}. {{ spell.title }}</v-list-item-title>
+        <v-list-item-sub-title>
           <v-avatar v-for="(effect, index) in effects" :key="index" tile size="1.5em">
-            <img :src="effect.icon">
+            <img :src="effect.icon" />
           </v-avatar>
-        </v-list-tile-sub-title>
-      </v-list-tile-content>
-    </v-list-tile>
+        </v-list-item-sub-title>
+      </v-list-item-content>
+    </v-list-item>
 
-    <SpellPanel :spell="spell"/>
+    <SpellPanel :spell="spell" />
   </v-menu>
 </template>
 

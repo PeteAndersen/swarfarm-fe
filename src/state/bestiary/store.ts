@@ -75,6 +75,7 @@ const bestiaryState: BestiaryState = {
   },
   isPopulating: false,
   lastPopulated: null,
+  filterDrawer: false,
   filters: defaultFilters,
   page: 1,
   pageSize: 40,
@@ -97,6 +98,12 @@ export const mutations: MutationTree<BestiaryState> = {
   },
   setOrderDir(state, dir: BestiaryState['orderDir']): void {
     state.orderDir = dir;
+  },
+  setFilterDrawer(state, value: boolean) {
+    state.filterDrawer = value;
+  },
+  toggleDrawer(state) {
+    state.filterDrawer = !state.filterDrawer;
   },
   setFilters(state, filters: BestiaryFilters): void {
     state.filters = filters;

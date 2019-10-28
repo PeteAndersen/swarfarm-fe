@@ -11,7 +11,7 @@ export default [
     component: Bestiary,
     children: [
       { path: '', component: Monsters },
-      { path: ':id-:slug', component: MonsterDetail },
+      { path: 'monster/:id-:slug', component: MonsterDetail },
     ],
   },
 ];

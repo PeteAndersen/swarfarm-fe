@@ -1,11 +1,11 @@
 <template>
   <v-flex>
-    <v-menu open-on-hover lazy :open-delay="350" max-width="350px">
-      <div slot="activator" class="skill-box">
+    <v-menu open-on-hover :open-delay="350" max-width="350px">
+      <template v-slot:activator="{ on }" class="skill-box">
         <div class="subheader text-truncate">{{skill.slot}}. {{skill.name}}</div>
 
         <v-avatar tile size="3em" class="skill-icon">
-          <img :src="`/img/skills/${skill.icon_filename}`">
+          <img :src="`/img/skills/${skill.icon_filename}`" />
         </v-avatar>
 
         <v-avatar
@@ -16,11 +16,11 @@
           slot="activator"
           class="ml-1"
         >
-          <img :src="`/img/skill_effects/${effect.effect.icon_filename}`">
+          <img :src="`/img/skill_effects/${effect.effect.icon_filename}`" />
         </v-avatar>
-      </div>
+      </template>
 
-      <SkillPanel :skill="skill"/>
+      <SkillPanel :skill="skill" />
     </v-menu>
   </v-flex>
 </template>

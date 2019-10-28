@@ -52,6 +52,7 @@ export interface BestiaryState {
   entities: BestiaryEntities;
   isPopulating: boolean;
   lastPopulated: number | null;
+  filterDrawer: boolean;
   filters: BestiaryFilters;
   page: number;
   pageSize: number;

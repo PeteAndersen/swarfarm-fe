@@ -1,39 +1,41 @@
 <template>
   <v-flex sm12 md6 :lg6="$store.state.filterDrawer" :lg4="!$store.state.filterDrawer" xl3>
-    <v-card height="100%" :to="`/monster/${this.monster.com2us_id}-${this.monster.name}`" hover>
+    <v-card height="100%" :to="`/bestiary/monster/${monster.com2us_id}-${monster.name}`" hover>
       <v-card-title class="pb-1">
         <v-layout>
           <v-tooltip bottom>
-            <v-avatar slot="activator" size="2rem">
-              <img :src="`/img/elements/${this.monster.element}.png`">
-            </v-avatar>
+            <template v-slot:activator="{ on }">
+              <v-avatar v-on="on" size="2rem">
+                <img :src="`/img/elements/${monster.element}.png`" />
+              </v-avatar>
+            </template>
             {{startCase(monster.element)}}
           </v-tooltip>
           <h2 class="ml-1">{{monster.name}}</h2>
-          <v-spacer/>
+          <v-spacer />
           <span class="caption">{{monster.archetype.toUpperCase()}}</span>
         </v-layout>
       </v-card-title>
       <v-container grid-list-md text-xs-center class="pa-2">
         <v-layout row>
           <v-flex>
-            <MonsterAvatar :monster="monster" :stars="monster.base_stars"/>
+            <MonsterAvatar :monster="monster" :stars="monster.base_stars" />
           </v-flex>
           <v-flex>
             <v-layout row wrap>
-              <Stat stat="hp" :value="monster.max_lvl_hp"/>
-              <Stat stat="atk" :value="monster.max_lvl_attack"/>
-              <Stat stat="def" :value="monster.max_lvl_defense"/>
-              <Stat stat="speed" :value="monster.speed"/>
-              <Stat stat="crit-rate" :value="monster.crit_rate"/>
-              <Stat stat="crit-dmg" :value="monster.crit_damage"/>
-              <Stat stat="accuracy" :value="monster.accuracy"/>
-              <Stat stat="resistance" :value="monster.resistance"/>
+              <Stat stat="hp" :value="monster.max_lvl_hp" />
+              <Stat stat="atk" :value="monster.max_lvl_attack" />
+              <Stat stat="def" :value="monster.max_lvl_defense" />
+              <Stat stat="speed" :value="monster.speed" />
+              <Stat stat="crit-rate" :value="monster.crit_rate" />
+              <Stat stat="crit-dmg" :value="monster.crit_damage" />
+              <Stat stat="accuracy" :value="monster.accuracy" />
+              <Stat stat="resistance" :value="monster.resistance" />
             </v-layout>
           </v-flex>
         </v-layout>
       </v-container>
-      <v-divider/>
+      <v-divider />
       <v-container class="pa-2">
         <v-layout row wrap class="text-truncate pb-2">
           <LeaderSkill

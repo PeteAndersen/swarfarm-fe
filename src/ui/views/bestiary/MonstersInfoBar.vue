@@ -1,40 +1,49 @@
 <template>
   <v-layout row align-baseline class="pb-2">
     <v-flex>
-      <v-btn @click="$store.commit('TOGGLE_DRAWER')" class="ml-0">
+      <v-btn @click="toggleDrawer()" class="ml-0">
         <v-icon class="pr-1">menu</v-icon>Filters
       </v-btn>Sort By
       <v-menu>
-        <v-btn text slot="activator" class="pl-1 pr-1">
-          {{ orderByText }}
-          <v-icon>arrow_drop_down</v-icon>
-        </v-btn>
+        <template v-slot:activator="{ on }">
+          <v-btn v-on="on" text slot="activator" class="pl-1 pr-1">
+            {{ orderByText }}
+            <v-icon>arrow_drop_down</v-icon>
+          </v-btn>
+        </template>
+
         <v-list>
-          <v-list-tile
+          <v-list-item
             dense
             v-for="(kvp, index) in Object.entries(orderbyOptions)"
             :key="index"
             @click="setOrderBy(kvp[0])"
           >
-            <v-list-tile-title>{{ kvp[1] }}</v-list-tile-title>
-          </v-list-tile>
+            <v-list-item-content>
+              <v-list-item-title>{{ kvp[1] }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
         </v-list>
       </v-menu>
 
       <v-menu>
-        <v-btn text slot="activator" class="pl-1 pr-1">
-          {{ orderDirectionText }}
-          <v-icon>arrow_drop_down</v-icon>
-        </v-btn>
+        <template v-slot:activator="{ on }">
+          <v-btn v-on="on" text slot="activator" class="pl-1 pr-1">
+            {{ orderDirectionText }}
+            <v-icon>arrow_drop_down</v-icon>
+          </v-btn>
+        </template>
         <v-list>
-          <v-list-tile
+          <v-list-item
             dense
             v-for="(kvp, index) in Object.entries(orderDirOptions)"
             :key="index"
             @click="setOrderDir(kvp[0])"
           >
-            <v-list-tile-title>{{ kvp[1] }}</v-list-tile-title>
-          </v-list-tile>
+            <v-list-item-content>
+              <v-list-item-title>{{ kvp[1] }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
         </v-list>
       </v-menu>
     </v-flex>
@@ -89,6 +98,7 @@ export default {
     },
   },
   methods: {
+    ...mapMutations('bestiary', ['toggleDrawer']),
     setOrderBy(newKey) {
       this.$store.commit('bestiary/setOrderBy', newKey);
     },

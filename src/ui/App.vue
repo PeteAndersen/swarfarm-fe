@@ -4,13 +4,8 @@
       <v-progress-linear :active="$store.state.loading" :indeterminate="true" class="ma-0"></v-progress-linear>
     </div>
 
-    <v-app-bar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>SWARFARM</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn text to="/bestiary">Bestiary</v-btn>
-    </v-app-bar>
+    <AppBar />
+    <MainNav />
 
     <v-content>
       <router-view></router-view>
@@ -19,8 +14,15 @@
 </template>
 
 <script>
+import AppBar from './components/AppBar';
+import MainNav from './components/MainNav';
+
 export default {
   name: 'App',
+  components: {
+    AppBar,
+    MainNav,
+  },
 };
 </script>
 
