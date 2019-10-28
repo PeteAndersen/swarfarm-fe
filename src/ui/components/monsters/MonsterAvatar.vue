@@ -14,7 +14,7 @@
         'star-5': x == 5,
         'star-6': x == 6,
       }"
-      >
+      />
     </template>
     <div class="level-text">
       <span v-if="level">{{ level }}</span>
@@ -97,6 +97,7 @@ img.avatar {
   top: 0;
   margin-left: -11.4px;
   height: 26%;
+  width: 26%;
 }
 
 .star-1 {

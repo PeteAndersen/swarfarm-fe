@@ -1,8 +1,17 @@
 <template>
   <v-flex sm12 md6 :lg6="$store.state.filterDrawer" :lg4="!$store.state.filterDrawer" xl3>
     <v-card height="100%" :to="`/bestiary/monster/${monster.com2us_id}-${monster.name}`" hover>
-      <v-card-title class="pb-1">
-        <v-layout>
+      <v-list-item>
+        <v-list-item-avatar tile size="80">
+          <MonsterAvatar :monster="monster" :stars="monster.base_stars" />
+        </v-list-item-avatar>
+
+        <v-list-item-content>
+          <v-list-item-title class="headline">{{monster.name}}</v-list-item-title>
+          <span class="overline">{{monster.archetype.toUpperCase()}}</span>
+        </v-list-item-content>
+
+        <v-list-item-icon>
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
               <v-avatar v-on="on" size="2rem">
@@ -11,16 +20,11 @@
             </template>
             {{startCase(monster.element)}}
           </v-tooltip>
-          <h2 class="ml-1">{{monster.name}}</h2>
-          <v-spacer />
-          <span class="caption">{{monster.archetype.toUpperCase()}}</span>
-        </v-layout>
-      </v-card-title>
-      <v-container grid-list-md text-xs-center class="pa-2">
+        </v-list-item-icon>
+      </v-list-item>
+
+      <v-container grid-list-md text-xs-center>
         <v-layout row>
-          <v-flex>
-            <MonsterAvatar :monster="monster" :stars="monster.base_stars" />
-          </v-flex>
           <v-flex>
             <v-layout row wrap>
               <Stat stat="hp" :value="monster.max_lvl_hp" />
@@ -35,9 +39,11 @@
           </v-flex>
         </v-layout>
       </v-container>
+
       <v-divider />
-      <v-container class="pa-2">
-        <v-layout row wrap class="text-truncate pb-2">
+
+      <v-container>
+        <v-layout row wrap class="text-truncate">
           <LeaderSkill
             v-if="monster.leader_skill"
             :skill="monster.leader_skill"
