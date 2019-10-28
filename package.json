@@ -5,13 +5,13 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@types/lodash": "^4.14.119",
     "axios": "^0.19.0",
-    "core-js": "^2.6.5",
+    "core-js": "^3.3.2",
     "lodash": "^4.17.11",
     "normalizr": "^3.3.0",
     "register-service-worker": "^1.6.2",
@@ -23,22 +23,26 @@
   },
   "devDependencies": {
     "@mdi/font": "^4.5.95",
-    "@types/jest": "^23.1.4",
-    "@vue/cli-plugin-babel": "^3.11.0",
-    "@vue/cli-plugin-pwa": "^3.11.0",
-    "@vue/cli-plugin-typescript": "^3.11.0",
-    "@vue/cli-plugin-unit-jest": "^3.11.0",
-    "@vue/cli-service": "^3.11.0",
+    "@types/jest": "^24.0.20",
+    "@vue/cli-plugin-babel": "^4.0.5",
+    "@vue/cli-plugin-pwa": "^4.0.5",
+    "@vue/cli-plugin-typescript": "^4.0.5",
+    "@vue/cli-plugin-unit-jest": "^4.0.5",
+    "@vue/cli-service": "^4.0.5",
     "@vue/test-utils": "^1.0.0-beta.29",
     "babel-core": "7.0.0-bridge.0",
     "sass": "^1.17.4",
-    "sass-loader": "^7.1.0",
-    "ts-jest": "^23.0.0",
+    "sass-loader": "^8.0.0",
+    "ts-jest": "^24.1.0",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.4.3",
-    "vue-cli-plugin-vuetify": "^0.6.3",
+    "vue-cli-plugin-vuetify": "^1.1.1",
     "vue-template-compiler": "^2.6.10",
     "vuetify-loader": "^1.2.2"
+  },
+  "prettier": {
+    "trailingComma": "all",
+    "singleQuote": true
   },
   "postcss": {
     "plugins": {
@@ -74,9 +78,5 @@
       "**/tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)"
     ],
     "testURL": "http://localhost/"
-  },
-  "prettier": {
-    "trailingComma": "all",
-    "singleQuote": true
   }
 }
