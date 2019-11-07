@@ -13,6 +13,7 @@ const store: StoreOptions<RootState> = {
     loading: false,
     error: false,
     drawer: true,
+    toast: [],
   },
   mutations: {
     LOADING(state, { value }) {
@@ -27,6 +28,15 @@ const store: StoreOptions<RootState> = {
     TOGGLE_DRAWER(state) {
       state.drawer = !state.drawer;
     },
+    ADD_TOAST(state, value) {
+      state.toast.push(value);
+    },
+    CLEAR_TOAST(state) {
+      state.toast.shift();
+    },
+  },
+  getters: {
+    firstToast: state => (state.toast.length ? state.toast[0] : null),
   },
   modules: {
     bestiary,

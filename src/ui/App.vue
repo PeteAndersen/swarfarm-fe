@@ -1,27 +1,32 @@
 <template>
   <v-app>
+    <AppBar />
+
     <div class="loading-indicator">
-      <v-progress-linear :active="$store.state.loading" :indeterminate="true" class="ma-0"></v-progress-linear>
+      <v-progress-linear :active="$store.state.loading" :indeterminate="true"></v-progress-linear>
     </div>
 
-    <AppBar />
     <MainNav />
 
     <v-content>
       <router-view></router-view>
     </v-content>
+
+    <Toast />
   </v-app>
 </template>
 
 <script>
 import AppBar from './components/AppBar';
 import MainNav from './components/MainNav';
+import Toast from './components/Toast';
 
 export default {
   name: 'App',
   components: {
     AppBar,
     MainNav,
+    Toast,
   },
 };
 </script>

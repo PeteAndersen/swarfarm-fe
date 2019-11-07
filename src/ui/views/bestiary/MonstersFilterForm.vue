@@ -1,7 +1,5 @@
 <template>
   <v-navigation-drawer fixed temporary v-model="filterDrawer">
-    <v-snackbar color="success" v-model="permalinkCopied" absolute top :timeout="2000">Copied!</v-snackbar>
-
     <v-toolbar flat>
       <v-list>
         <v-list-item>
@@ -133,7 +131,6 @@ export default {
   name: 'MonstersFilterForm',
   data() {
     return {
-      permalinkCopied: false,
       autoApply: false,
       autoApplyDebounce: null,
       filters: { ...this.$store.state.bestiary.filters },
@@ -202,7 +199,7 @@ export default {
       el.select();
       document.execCommand('copy');
       document.body.removeChild(el);
-      this.permalinkCopied = true;
+      this.$store.commit('ADD_TOAST', { message: 'Copied!', color: 'success' });
     },
   },
   created() {
