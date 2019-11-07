@@ -34,7 +34,7 @@ export interface Monster {
   base_stars: 1 | 2 | 3 | 4 | 5 | 6;
   obtainable: boolean;
   can_awaken: boolean;
-  is_awakened: boolean;
+  awaken_level: number;
   awaken_bonus: string;
   skills: number[];
   skill_ups_to_max: 7;

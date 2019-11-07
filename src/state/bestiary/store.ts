@@ -7,12 +7,7 @@ import { RootState } from '@/state/types';
 import applyFilters from '@/services/filters';
 import { Filter } from '@/services/filters.types';
 import { Monster } from '@/services/monsters.types';
-import {
-  BestiaryState,
-  BestiaryEntities,
-  BestiaryFilters,
-  AwakenedOptions,
-} from './types';
+import { BestiaryState, BestiaryEntities, BestiaryFilters } from './types';
 import * as api from './api';
 import schema from './schema';
 
@@ -21,7 +16,7 @@ export const defaultFilters: BestiaryFilters = {
   name: '',
   element: [],
   base_stars: [1, 6],
-  awakened: AwakenedOptions.BOTH,
+  awaken_level: [],
   archetype: [],
   leader_skill_area: [],
   leader_skill_attribute: [],
@@ -33,26 +28,12 @@ const undefinedIfEmpty = (arry: any[]): any[] | undefined =>
 
 const stateToFilters = (filters: BestiaryFilters): Filter => {
   // Convert local state to input format expected by filtering system
-  let awakened;
-  switch (filters.awakened) {
-    case AwakenedOptions.AWAKENED:
-      awakened = true;
-      break;
-    case AwakenedOptions.UNAWAKENED:
-      awakened = false;
-      break;
-    case AwakenedOptions.BOTH:
-    default:
-      awakened = undefined;
-      break;
-  }
-
   const filterObj: Filter = {
     name__istartswith: filters.name,
     element__in: undefinedIfEmpty(filters.element),
     base_stars__gte: filters.base_stars[0],
     base_stars__lte: filters.base_stars[1],
-    is_awakened: awakened,
+    awaken_level__in: undefinedIfEmpty(filters.awaken_level),
     archetype__in: undefinedIfEmpty(filters.archetype),
     leader_skill__area__in: undefinedIfEmpty(filters.leader_skill_area),
     leader_skill__attribute__in: undefinedIfEmpty(

@@ -1,9 +1,12 @@
 <template>
-  <v-layout row align-baseline class="pb-2">
+  <v-layout row align-baseline class="pb-2 ma-1">
     <v-flex>
-      <v-btn @click="toggleDrawer()" class="ml-0">
+      <v-btn @click="toggleDrawer()" class="mr-2">
         <v-icon class="pr-1">menu</v-icon>Filters
-      </v-btn>Sort By
+      </v-btn>
+
+      <span>Sort By</span>
+
       <v-menu>
         <template v-slot:activator="{ on }">
           <v-btn v-on="on" text slot="activator" class="pl-1 pr-1">
@@ -50,7 +53,7 @@
 
     <v-spacer />
 
-    <v-flex class="text-xs-right">{{ filteredMonsterCount }} of {{ totalMonsterCount }} Monsters</v-flex>
+    <v-flex class="text-right">{{ filteredMonsterCount }} of {{ totalMonsterCount }} Monsters</v-flex>
   </v-layout>
 </template>
 

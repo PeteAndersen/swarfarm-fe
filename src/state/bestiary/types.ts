@@ -35,17 +35,11 @@ export interface BestiaryFilters {
   name: string;
   element: Element[];
   base_stars: [number, number];
-  awakened: AwakenedOptions;
+  awaken_level: number[];
   archetype: Archetype[];
   leader_skill_area: LeaderSkillArea[];
   leader_skill_attribute: LeaderSkillAttribute[];
   leader_skill_bonus: number;
-}
-
-export enum AwakenedOptions {
-  BOTH = 'both',
-  UNAWAKENED = 'unawakened',
-  AWAKENED = 'awakened',
 }
 
 export interface BestiaryState {

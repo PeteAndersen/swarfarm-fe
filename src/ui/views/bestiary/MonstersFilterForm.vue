@@ -54,14 +54,14 @@
           item-value="value"
         ></v-select>
 
-        <v-radio-group v-model="filters.awakened">
-          <v-radio
-            v-for="(data, idx) in awakenedOptions"
-            :key="idx"
-            :label="data.name"
-            :value="data.value"
-          ></v-radio>
-        </v-radio-group>
+        <v-select
+          v-model="filters.awaken_level"
+          label="Awakening"
+          :items="awakenedOptions"
+          multiple
+          item-text="name"
+          item-value="value"
+        ></v-select>
 
         <v-range-slider
           v-model="filters.base_stars"
@@ -135,9 +135,9 @@ export default {
       autoApplyDebounce: null,
       filters: { ...this.$store.state.bestiary.filters },
       awakenedOptions: [
-        { name: 'Awakened and Unawakened', value: AwakenedOptions.BOTH },
-        { name: 'Unawakened Only', value: AwakenedOptions.UNAWAKENED },
-        { name: 'Awakened Only', value: AwakenedOptions.AWAKENED },
+        { name: 'Unawakened', value: 0 },
+        { name: 'Awakened', value: 1 },
+        { name: 'Second Awakening', value: 2 },
       ],
     };
   },
